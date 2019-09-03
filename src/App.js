@@ -4,16 +4,48 @@ import { TodoList } from "./components/todo-list";
 import { AppHeader } from "./components/app-header";
 import { ItemStatusFilter } from "./components/item-status-filter";
 import { InputField } from "./components/InputField";
+import { ItemAddForm } from "./components/item-add-form";
 
 function App() {
+  let maxId = 100;
+
+  const createTodoItem = label => {
+    return {
+      label,
+      important: false,
+      done: false,
+      id: maxId++
+    };
+  };
+
   const [toDo, setTodo] = useState([
-    { label: "Drink Coffee", important: false, id: 1 },
-    { label: "Make Awesome App", important: true, id: 2 },
-    { label: "Have a lunch", important: false, id: 3 }
+    createTodoItem("Drink Coffee"),
+    createTodoItem("Make Awesome App"),
+    createTodoItem("Have a lunch")
   ]);
+
+  const onToggleDone = id => {
+    const idx = toDo.findIndex(el => el.id === id);
+
+    const oldItem = toDo[idx];
+    const newItem = { ...oldItem, done: !oldItem.done };
+
+    const newArray = [...toDo.slice(0, idx), newItem, ...toDo.slice(idx + 1)];
+    console.log(toDo);
+    setTodo(newArray);
+  };
+
+  const onToggleImportant = id => {
+    console.log("toggle important");
+  };
 
   const deleteItem = id => {
     setTodo(toDo.filter(todo => todo.id !== id));
+  };
+
+  const addItem = text => {
+    const newItem = createTodoItem(text);
+    setTodo([...toDo, newItem]);
   };
   return (
     <div className="todo-app">
@@ -25,7 +57,14 @@ function App() {
         <ItemStatusFilter />
       </div>
 
-      <TodoList todoList={toDo} onDeleted={deleteItem}></TodoList>
+      <TodoList
+        todoList={toDo}
+        onDeleted={deleteItem}
+        onToggleDone={onToggleDone}
+        onToggleImportant={onToggleImportant}
+      ></TodoList>
+
+      <ItemAddForm onItemAdded={addItem} />
     </div>
   );
 }

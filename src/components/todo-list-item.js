@@ -1,30 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
 import "./todo-list-item.css";
 
-export const TodoListItem = ({ label, important, onDeleted }) => {
-  const [done, setDone] = useState(false);
-  const [importants, setImportants] = useState(false);
+export const TodoListItem = ({
+  label,
+  important,
+  done,
+  onDeleted,
+  onToggleDone,
+  onToggleImportant
+}) => {
+  //   const [done, setDone] = useState(false);
+  //   const [importants, setImportants] = useState(false);
 
-  const onLabelClick = () => {
-    setDone(!done);
-  };
+  //   const onLabelClick = () => {
+  //     setDone(!done);
+  //   };
 
-  const onMarkImportant = () => {
-    setImportants(!importants);
-  };
+  //   const onMarkImportant = () => {
+  //     setImportants(!importants);
+  //   };
 
   let classNames = "todo-list-item";
+
   if (done) {
     classNames += " done";
   }
 
-  if (importants) {
+  if (important) {
     classNames += " important";
+    console.log(important);
   }
-
+  console.log(done);
   return (
     <span className={classNames}>
-      <span className="todo-list-item-label" onClick={onLabelClick}>
+      <span className="todo-list-item-label" onClick={onToggleDone}>
         {label}
       </span>
 
@@ -39,7 +48,7 @@ export const TodoListItem = ({ label, important, onDeleted }) => {
       <button
         type="button"
         className="btn btn-outline-success btn-sm float-right"
-        onClick={onMarkImportant}
+        onClick={onToggleImportant}
       >
         <i className="fa fa-exclamation" />
       </button>
