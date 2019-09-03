@@ -11,6 +11,10 @@ function App() {
     { label: "Make Awesome App", important: true, id: 2 },
     { label: "Have a lunch", important: false, id: 3 }
   ]);
+
+  const deleteItem = id => {
+    setTodo(toDo.filter(todo => todo.id !== id));
+  };
   return (
     <div className="todo-app">
       <AppHeader toDo={1} done={3} />
@@ -21,7 +25,7 @@ function App() {
         <ItemStatusFilter />
       </div>
 
-      <TodoList todoList={toDo}></TodoList>
+      <TodoList todoList={toDo} onDeleted={deleteItem}></TodoList>
     </div>
   );
 }
