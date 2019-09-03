@@ -9,17 +9,6 @@ export const TodoListItem = ({
   onToggleDone,
   onToggleImportant
 }) => {
-  //   const [done, setDone] = useState(false);
-  //   const [importants, setImportants] = useState(false);
-
-  //   const onLabelClick = () => {
-  //     setDone(!done);
-  //   };
-
-  //   const onMarkImportant = () => {
-  //     setImportants(!importants);
-  //   };
-
   let classNames = "todo-list-item";
 
   if (done) {
@@ -28,9 +17,7 @@ export const TodoListItem = ({
 
   if (important) {
     classNames += " important";
-    console.log(important);
   }
-  console.log(done);
   return (
     <span className={classNames}>
       <span className="todo-list-item-label" onClick={onToggleDone}>

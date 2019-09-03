@@ -26,12 +26,9 @@ function App() {
 
   const onToggleDone = id => {
     const idx = toDo.findIndex(el => el.id === id);
-
     const oldItem = toDo[idx];
     const newItem = { ...oldItem, done: !oldItem.done };
-
     const newArray = [...toDo.slice(0, idx), newItem, ...toDo.slice(idx + 1)];
-    console.log(toDo);
     setTodo(newArray);
   };
 
@@ -47,9 +44,14 @@ function App() {
     const newItem = createTodoItem(text);
     setTodo([...toDo, newItem]);
   };
+
+  const doneCount = toDo.filter(el => el.done).length;
+
+  const todoCount = toDo.length - doneCount;
+
   return (
     <div className="todo-app">
-      <AppHeader toDo={1} done={3} />
+      <AppHeader toDo={todoCount} done={doneCount} />
       <div className="search-panel d-flex">
         <div className="search">
           <InputField />
