@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 import { TodoList } from "./components/todo-list";
 import { AppHeader } from "./components/app-header";
+import { ItemStatusFilter } from "./components/item-status-filter";
+import { InputField } from "./components/InputField";
 
 function App() {
   const [toDo, setTodo] = useState([
@@ -11,7 +13,14 @@ function App() {
   ]);
   return (
     <div className="todo-app">
-      <AppHeader />
+      <AppHeader toDo={1} done={3} />
+      <div className="search-panel d-flex">
+        <div className="search">
+          <InputField />
+        </div>
+        <ItemStatusFilter />
+      </div>
+
       <TodoList todoList={toDo}></TodoList>
     </div>
   );
