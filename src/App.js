@@ -24,16 +24,19 @@ function App() {
     createTodoItem("Have a lunch")
   ]);
 
+  const toggleProperty = (arr, id, propName) => {
+    const idx = arr.findIndex(el => el.id === id);
+    const oldItem = arr[idx];
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+    return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
+  };
+
   const onToggleDone = id => {
-    const idx = toDo.findIndex(el => el.id === id);
-    const oldItem = toDo[idx];
-    const newItem = { ...oldItem, done: !oldItem.done };
-    const newArray = [...toDo.slice(0, idx), newItem, ...toDo.slice(idx + 1)];
-    setTodo(newArray);
+    setTodo(toggleProperty(toDo, id, "done"));
   };
 
   const onToggleImportant = id => {
-    console.log("toggle important");
+    setTodo(toggleProperty(toDo, id, "important"));
   };
 
   const deleteItem = id => {
