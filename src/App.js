@@ -25,7 +25,7 @@ function App() {
   ]);
 
   const [term, setTerm] = useState("");
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("active");
 
   const toggleProperty = (arr, id, propName) => {
     const idx = arr.findIndex(el => el.id === id);
@@ -44,6 +44,10 @@ function App() {
 
   const onSearchChange = term => {
     setTerm(term);
+  };
+
+  const onFilterChange = term => {
+    setFilter(term);
   };
 
   const deleteItem = id => {
@@ -69,7 +73,20 @@ function App() {
     });
   };
 
-  const visibleItem = search(toDo, term);
+  const filters = (items, filter) => {
+    switch (filter) {
+      case "all":
+        return items;
+      case "active":
+        return items.filter(item => !item.done);
+      case "done":
+        return items.filter(item => item.done);
+      default:
+        return items;
+    }
+  };
+
+  const visibleItem = filters(search(toDo, term), filter);
 
   return (
     <div className="todo-app">
@@ -78,7 +95,7 @@ function App() {
         <div className="search">
           <InputField onSearchChange={onSearchChange} />
         </div>
-        <ItemStatusFilter />
+        <ItemStatusFilter filter={filter} onFilterChange={onFilterChange} />
       </div>
 
       <TodoList
