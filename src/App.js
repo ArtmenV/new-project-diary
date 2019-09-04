@@ -14,7 +14,7 @@ function App() {
       label,
       important: false,
       done: false,
-      id: maxId++
+      id: maxId * Math.random().toFixed(6)
     };
   };
 
@@ -23,6 +23,8 @@ function App() {
     createTodoItem("Make Awesome App"),
     createTodoItem("Have a lunch")
   ]);
+
+  const [term, setTerm] = useState("");
 
   const toggleProperty = (arr, id, propName) => {
     const idx = arr.findIndex(el => el.id === id);
@@ -39,6 +41,10 @@ function App() {
     setTodo(toggleProperty(toDo, id, "important"));
   };
 
+  const onSearchChange = term => {
+    setTerm(term);
+  };
+
   const deleteItem = id => {
     setTodo(toDo.filter(todo => todo.id !== id));
   };
@@ -52,18 +58,30 @@ function App() {
 
   const todoCount = toDo.length - doneCount;
 
+  const search = (items, term) => {
+    if (term.lenght === 0) {
+      return items;
+    }
+
+    return items.filter(item => {
+      return item.label.indexOf(term) > -1;
+    });
+  };
+
+  const visibleItem = search(toDo, term);
+
   return (
     <div className="todo-app">
       <AppHeader toDo={todoCount} done={doneCount} />
       <div className="search-panel d-flex">
         <div className="search">
-          <InputField />
+          <InputField onSearchChange={onSearchChange} />
         </div>
         <ItemStatusFilter />
       </div>
 
       <TodoList
-        todoList={toDo}
+        todoList={visibleItem}
         onDeleted={deleteItem}
         onToggleDone={onToggleDone}
         onToggleImportant={onToggleImportant}

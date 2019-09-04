@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 
-export const InputField = () => {
-  const state = {
-    term: ""
-  };
-  const [chip, onChip] = useState(state);
+export const InputField = props => {
+  const [term, setTerm] = useState("");
 
-  const onTermChange = e => {
-    onChip({ term: e.target.value });
+  const onSearchChange = e => {
+    setTerm(e.target.value);
+    console.log(term);
+    props.onSearchChange(term);
   };
   return (
     <input
       type="text"
       className="form-control search-input"
       placeholder="type to search"
-      value={chip.term}
-      onChange={onTermChange}
+      value={term}
+      onChange={onSearchChange}
     />
   );
 };
