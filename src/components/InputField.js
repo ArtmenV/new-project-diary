@@ -5,7 +5,6 @@ export const InputField = props => {
 
   const onSearchChange = e => {
     setTerm(e.target.value);
-    console.log(term);
     props.onSearchChange(term);
   };
   return (

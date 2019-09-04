@@ -25,6 +25,7 @@ function App() {
   ]);
 
   const [term, setTerm] = useState("");
+  const [filter, setFilter] = useState("");
 
   const toggleProperty = (arr, id, propName) => {
     const idx = arr.findIndex(el => el.id === id);
@@ -64,7 +65,7 @@ function App() {
     }
 
     return items.filter(item => {
-      return item.label.indexOf(term) > -1;
+      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
     });
   };
 
